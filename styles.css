@@ -66,33 +66,55 @@ body {
     text-shadow: 0 0 10px var(--neon-pink);
 }
 
-/* --- 3. Hero Section (視覺重心，減少裝飾) --- */
-.hero {
-    padding: 200px 0 120px;
+/* --- 3. Hero Section (加入圖片相關樣式) --- */
+
+/* 建立雙欄 Flex 佈局 */
+.hero-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px; /* 圖片與文字的間距 */
 }
 
-.hero-content { max-width: 700px; }
-
-.hero-greeting {
-    color: var(--neon-pink);
-    font-weight: 700; font-size: 0.9rem;
-    text-transform: uppercase; letter-spacing: 3px;
-    margin-bottom: 15px; display: block;
+/* 圖片容器：設定賽博朋克風邊框 */
+.hero-image-container {
+    flex-shrink: 0; /* 防止圖片被壓縮 */
+    position: relative;
+    width: 280px; /* 圖片寬度 */
+    height: 280px; /* 圖片高度 */
+    padding: 5px; /* 邊框與圖片的間隙 */
+    background: var(--bg-panel);
+    
+    /* 幾何切角 (與按鈕風格一致) */
+    clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+    
+    /* 霓虹邊框效果 */
+    border: 1px solid var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
 }
 
-.hero-name {
-    font-size: clamp(2.5rem, 8vw, 4rem); /* 響應式字體 */
-    font-weight: 900; line-height: 1.1;
-    margin-bottom: 25px; text-transform: uppercase;
-    /* 僅在 Logo 與主標題使用故障陰影，不濫用 */
-    text-shadow: 2px 2px 0 var(--neon-cyan), -1px -1px 0 var(--neon-pink);
+/* 圖片本身樣式 */
+.hero-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 確保圖片填滿容器且不變形 */
+    /* 同樣加上切角，確保圖片邊緣符合容器 */
+    clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+    display: block;
+    filter: grayscale(20%) contrast(110%); /* 微微調色，增加科技冷冽感 */
 }
 
-.hero-tagline {
-    font-size: 1.15rem; color: var(--text-dim);
-    margin-bottom: 50px;
-    border-left: 3px solid var(--neon-cyan); /* 用線條建立視覺對齊 */
-    padding-left: 20px;
+/* (選配) 圖片 hover 時的動態效果 */
+.hero-image-container:hover {
+    box-shadow: 0 0 25px var(--neon-cyan);
+    transform: scale(1.02);
+    transition: var(--transition);
+}
+
+/* 讓原本的 hero-content 不再置中，配合雙欄佈局 */
+.hero-content {
+    max-width: 600px;
+    text-align: left; /* 確保文字靠左對齊 */
 }
 
 /* --- 4. 按鈕 (科技感幾何外型) --- */
@@ -202,11 +224,43 @@ body {
     border-top: 1px solid var(--border-dark);
 }
 
-/* --- 10. RWD (手機版優化) --- */
+/* --- 10. RWD (手機版優化修改) --- */
 @media (max-width: 768px) {
     .container { padding: 0 20px; }
-    .hero { padding: 160px 0 80px; }
-    .hero-btns { flex-direction: column; gap: 15px; }
+    
+    /* 手機版改為垂直排列 */
+    .hero-wrapper {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .hero { padding: 120px 0 60px; }
+    
+    /* 縮小手機版的圖片 */
+    .hero-image-container {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto; /* 居中 */
+    }
+    
+    .hero-content {
+        text-align: center; /* 手機版文字居中 */
+    }
+    
+    .hero-tagline {
+        border-left: none; /* 移除左側線條 */
+        border-top: 2px solid var(--neon-cyan); /* 改為上方線條 */
+        padding-left: 0;
+        padding-top: 15px;
+        margin: 0 auto 40px;
+    }
+
+    .hero-btns { flex-direction: column; gap: 15px; align-items: center; }
+    .btn { width: 100%; max-width: 300px; text-align: center; }
+    
+    .nav-links { display: none; }
+}
     .btn { width: 100%; text-align: center; }
     .nav-links { display: none; } /* MVP 手機版隱藏菜單以保持整潔 */
 }
