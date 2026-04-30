@@ -1,0 +1,212 @@
+/* --- 1. 核心變數與重設 (定義精確色調) --- */
+:root {
+    --bg-black: #020202;         /* 深度黑，減少雜訊 */
+    --bg-panel: #0a0a0a;         /* 卡片/面板背景色 */
+    --neon-cyan: #00f2ff;        /* 核心青色 */
+    --neon-pink: #ff00ff;        /* 強調粉色 */
+    --neon-yellow: #fefe00;      /* 警示黃色 */
+    --text-main: #ffffff;
+    --text-dim: #b0b0b0;         /* 內文灰色，提升長時間閱讀舒適度 */
+    --transition: all 0.2s ease-out; /* 縮短時間，感覺更銳利 */
+    --border-dark: rgba(255, 255, 255, 0.05);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', 'SF Pro Display', -apple-system, sans-serif; /* 清潔的黑體，易讀 */
+    background-color: var(--bg-black);
+    color: var(--text-main);
+    line-height: 1.7; /* 充足的行高 */
+    /* 極淡的背景網格，僅作為結構暗示，不干擾視覺 */
+    background-image: linear-gradient(rgba(0, 242, 255, 0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0, 242, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+/* 確保容器整齊對齊 */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+/* --- 2. 導覽列 (清晰、高對比) --- */
+.navbar {
+    position: fixed;
+    top: 0; width: 100%; height: 70px;
+    background: rgba(2, 2, 2, 0.95);
+    backdrop-filter: blur(5px);
+    border-bottom: 2px solid var(--neon-cyan);
+    display: flex; align-items: center; z-index: 1000;
+}
+
+.navbar .container {
+    display: flex; justify-content: space-between; align-items: center; width: 100%;
+}
+
+.logo {
+    font-size: 1.3rem; font-weight: 900; color: var(--text-main);
+    text-decoration: none; letter-spacing: 1px;
+    text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.nav-links { display: flex; list-style: none; }
+.nav-links li { margin-left: 30px; }
+.nav-links a {
+    text-decoration: none; 
+    color: var(--neon-cyan); /* 高對比青色 */
+    font-weight: 700; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 2px;
+    transition: var(--transition);
+}
+
+.nav-links a:hover {
+    color: var(--neon-pink);
+    text-shadow: 0 0 10px var(--neon-pink);
+}
+
+/* --- 3. Hero Section (視覺重心，減少裝飾) --- */
+.hero {
+    padding: 200px 0 120px;
+}
+
+.hero-content { max-width: 700px; }
+
+.hero-greeting {
+    color: var(--neon-pink);
+    font-weight: 700; font-size: 0.9rem;
+    text-transform: uppercase; letter-spacing: 3px;
+    margin-bottom: 15px; display: block;
+}
+
+.hero-name {
+    font-size: clamp(2.5rem, 8vw, 4rem); /* 響應式字體 */
+    font-weight: 900; line-height: 1.1;
+    margin-bottom: 25px; text-transform: uppercase;
+    /* 僅在 Logo 與主標題使用故障陰影，不濫用 */
+    text-shadow: 2px 2px 0 var(--neon-cyan), -1px -1px 0 var(--neon-pink);
+}
+
+.hero-tagline {
+    font-size: 1.15rem; color: var(--text-dim);
+    margin-bottom: 50px;
+    border-left: 3px solid var(--neon-cyan); /* 用線條建立視覺對齊 */
+    padding-left: 20px;
+}
+
+/* --- 4. 按鈕 (科技感幾何外型) --- */
+.hero-btns { display: flex; gap: 20px; }
+
+.btn {
+    padding: 15px 35px;
+    text-decoration: none; font-weight: 800;
+    text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px;
+    transition: var(--transition);
+    position: relative;
+    /* 幾何切角 */
+    clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+}
+
+.btn-primary {
+    background: var(--neon-cyan);
+    color: var(--bg-black);
+}
+
+.btn-primary:hover {
+    background: var(--text-main);
+    box-shadow: 0 0 20px var(--neon-cyan);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    border: 1px solid var(--neon-pink);
+    color: var(--neon-pink);
+    background: rgba(255, 0, 255, 0.02);
+}
+
+.btn-outline:hover {
+    background: var(--neon-pink);
+    color: var(--bg-black);
+    box-shadow: 0 0 20px var(--neon-pink);
+}
+
+/* --- 5. Section 通用樣式 (建立清晰邊界) --- */
+.section { 
+    padding: 100px 0;
+    border-top: 1px solid var(--border-dark); /* 用淡淡的線條分隔區塊 */
+}
+
+.section-header { margin-bottom: 50px; }
+
+.section-title {
+    font-size: 1.2rem; color: var(--neon-yellow);
+    text-transform: uppercase; letter-spacing: 4px;
+    font-family: monospace;
+}
+
+/* 面板/卡片化內容 (解決「亂」的核心) */
+.content-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-dark);
+    padding: 40px;
+    position: relative;
+    /* 增加一個裝飾性霓虹角落，強化風格但不干擾內文 */
+}
+
+.content-panel::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 10px; height: 10px;
+    border-top: 2px solid var(--neon-cyan); border-left: 2px solid var(--neon-cyan);
+}
+
+/* --- 6. About --- */
+.about-text p { margin-bottom: 25px; color: var(--text-dim); }
+.about-text strong { color: var(--text-main); }
+
+/* --- 7. Work --- */
+.work-status {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px dashed rgba(254, 254, 0, 0.3);
+    padding: 60px; text-align: center;
+    color: var(--neon-yellow);
+    font-family: monospace; font-size: 0.9rem;
+}
+
+/* --- 8. Contact --- */
+.contact-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.contact-item {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-dark);
+    padding: 25px; text-align: center;
+    text-decoration: none; color: var(--text-main);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.contact-item:hover {
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+/* --- 9. Footer --- */
+.footer {
+    padding: 60px 0; text-align: center;
+    font-size: 0.7rem; color: #444;
+    border-top: 1px solid var(--border-dark);
+}
+
+/* --- 10. RWD (手機版優化) --- */
+@media (max-width: 768px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 160px 0 80px; }
+    .hero-btns { flex-direction: column; gap: 15px; }
+    .btn { width: 100%; text-align: center; }
+    .nav-links { display: none; } /* MVP 手機版隱藏菜單以保持整潔 */
+}
